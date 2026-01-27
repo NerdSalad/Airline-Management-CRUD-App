@@ -31,7 +31,6 @@ export const getReservationByPNR = async (req, res) => {
   }
 };
 
-// 🔹 Cancel reservation (delete from table)
 export const cancelReservation = async (req, res) => {
   const { pnr } = req.params;
   try {

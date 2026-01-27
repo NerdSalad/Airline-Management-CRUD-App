@@ -1,6 +1,5 @@
 import db from "../config/db.js";
 
-// 🔹 Fetch Passenger by Aadhar
 export const getPassengerByAadhar = async (req, res) => {
   const { aadhar } = req.params;
   try {
@@ -12,7 +11,6 @@ export const getPassengerByAadhar = async (req, res) => {
   }
 };
 
-// 🔹 Fetch Flight by Route (case-insensitive)
 export const getFlightByRoute = async (req, res) => {
   const { src, des } = req.query;
   try {
@@ -30,11 +28,9 @@ export const getFlightByRoute = async (req, res) => {
   }
 };
 
-// 🔹 Book Flight with validation + JOIN verification
 export const bookFlight = async (req, res) => {
   const { aadhar, flightcode, ddate } = req.body;
   try {
-    // Validate existence of both passenger and flight
     const [check] = await db.query(
       `SELECT 
          p.name, p.nationality, 
@@ -62,7 +58,6 @@ export const bookFlight = async (req, res) => {
   }
 };
 
-// 🔹 Get all reservations (JOIN passenger + flight)
 export const getReservations = async (req, res) => {
   try {
     const [rows] = await db.query(`
@@ -81,7 +76,6 @@ export const getReservations = async (req, res) => {
       ORDER BY r.ddate DESC
     `);
     
-    // Process rows to ensure date formatting works
     const processedRows = rows.map(row => ({
       ...row,
       formatted_date: row.ddate 
@@ -100,7 +94,6 @@ export const getReservations = async (req, res) => {
   }
 };
 
-// 🔹 Fetch Boarding Pass Details by PNR
 export const getBoardingPassDetails = async (req, res) => {
   const { pnr } = req.params;
   try {
